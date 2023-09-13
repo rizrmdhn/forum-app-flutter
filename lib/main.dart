@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:forum_app_flutter/components/app_bar.dart';
 import 'package:forum_app_flutter/components/bottom_navigation.dart';
 import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
@@ -10,7 +9,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
+
   static const String _title = 'Forum App';
 
   @override
@@ -18,8 +20,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final thread = threadList;
-  final leaderBoard = leaderBoardList;
+  final List<Thread> thread = threadList;
+  final List<LeaderBoard> leaderBoard = leaderBoardList;
   var currentPageIndex = 0;
 
   @override
@@ -30,7 +32,6 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: const CustomAppBar(title: MyApp._title),
         body: <Widget>[
           const Center(
             child: Text('Leaderboard'),
@@ -41,7 +42,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ][currentPageIndex],
         bottomNavigationBar: CustomBottomNavigation(
-            thread: thread,
             currentPageIndex: currentPageIndex,
             changePage: (int index) {
               setState(() {

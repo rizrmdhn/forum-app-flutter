@@ -7,10 +7,10 @@ class Thread {
   String body;
   String category;
   String createdAt;
-  String ownerId;
-  List<Object> upVotesBy;
-  List<Object> downVotesBy;
-  List<Object> comments;
+  User owner;
+  List<User> upVotesBy;
+  List<User> downVotesBy;
+  List<Comment> comments;
   int totalComments;
 
   Thread({
@@ -19,7 +19,7 @@ class Thread {
     required this.body,
     required this.category,
     required this.createdAt,
-    required this.ownerId,
+    required this.owner,
     required this.upVotesBy,
     required this.downVotesBy,
     required this.comments,
@@ -34,7 +34,7 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -46,8 +46,11 @@ var threadList = [
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
-        upVotesBy: ['user-1', 'user-2'],
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
+        upVotesBy: [
+          User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
+          User(id: 'user-2', name: 'Jane Doe', email: 'janedoe@mail.com'),
+        ],
         downVotesBy: [],
       ),
     ),
@@ -59,20 +62,25 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
     ],
-    downVotesBy: ['user-3'],
+    downVotesBy: [
+      User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
+    ],
     comments: List.generate(
       2,
       (index) => Comment(
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
-        upVotesBy: ['user-1', 'user-2'],
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
+        upVotesBy: [
+          User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
+          User(id: 'user-2', name: 'Jane Doe', email: 'janedoe@mail.com'),
+        ],
         downVotesBy: [],
       ),
     ),
@@ -84,7 +92,7 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -96,7 +104,7 @@ var threadList = [
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
         upVotesBy: [
           User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
           User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -112,7 +120,7 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -124,10 +132,10 @@ var threadList = [
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
         upVotesBy: [
           User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
-          User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
+          User(id: 'user-2', name: 'Jane Doe', email: 'janedoe@mail.com'),
         ],
         downVotesBy: [],
       ),
@@ -140,7 +148,7 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -152,7 +160,7 @@ var threadList = [
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
         upVotesBy: [
           User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
           User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -168,7 +176,7 @@ var threadList = [
     body: 'I want to make a Flutter app, but I don\'t know how to start.',
     category: 'Flutter',
     createdAt: '2021-10-01T00:00:00.000Z',
-    ownerId: 'user-1',
+    owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
       User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
       User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),
@@ -180,7 +188,7 @@ var threadList = [
         id: 'comment-$index',
         body: 'This is a comment',
         createdAt: '2021-10-01T00:00:00.000Z',
-        ownerId: 'user-1',
+        owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
         upVotesBy: [
           User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
           User(id: 'user-2', name: 'Jane Doe', email: 'janeDoe@mail.com'),

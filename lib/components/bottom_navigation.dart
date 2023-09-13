@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:forum_app_flutter/model/thread.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
-  final List<Thread> thread;
   final int currentPageIndex;
   final Function(int) changePage;
 
   const CustomBottomNavigation({
     Key? key,
     required this.currentPageIndex,
-    required this.thread,
     required this.changePage,
   }) : super(key: key);
 
@@ -23,20 +20,40 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
     return NavigationBar(
       onDestinationSelected: widget.changePage,
       selectedIndex: widget.currentPageIndex,
+      backgroundColor: const Color.fromARGB(255, 34, 40, 49),
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       destinations: const <NavigationDestination>[
         NavigationDestination(
-          icon: Icon(Icons.leaderboard_outlined),
-          selectedIcon: Icon(Icons.leaderboard),
+          icon: Icon(
+            Icons.leaderboard_outlined,
+            color: Colors.white,
+          ),
+          selectedIcon: Icon(
+            Icons.leaderboard,
+            color: Colors.white,
+          ),
           label: 'Leaderboard',
         ),
         NavigationDestination(
-          icon: Icon(Icons.forum_outlined),
-          selectedIcon: Icon(Icons.forum),
+          icon: Icon(
+            Icons.forum_outlined,
+            color: Colors.white,
+          ),
+          selectedIcon: Icon(
+            Icons.forum,
+            color: Colors.white,
+          ),
           label: 'Forum',
         ),
         NavigationDestination(
-          icon: Icon(Icons.settings_outlined),
-          selectedIcon: Icon(Icons.settings),
+          icon: Icon(
+            Icons.settings_outlined,
+            color: Colors.white,
+          ),
+          selectedIcon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
           label: 'Settings',
         ),
       ],
