@@ -4,7 +4,7 @@ class Comment {
   String id;
   String body;
   String createdAt;
-  Object owner;
+  User owner;
   List<User> upVotesBy;
   List<User> downVotesBy;
 
