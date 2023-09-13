@@ -39,15 +39,21 @@ class ThreadListState extends State<ThreadList> {
     return ListView.builder(
       itemCount: widget.thread.length,
       itemBuilder: (context, index) {
-        return ThreadCard(
-          category: widget.thread[index].category,
-          title: widget.thread[index].title,
-          body: widget.thread[index].body,
-          upVotesBy: widget.thread[index].upVotesBy,
-          downVotesBy: widget.thread[index].downVotesBy,
-          comments: widget.thread[index].comments,
-          createdAt: widget.thread[index].createdAt,
-          owner: widget.thread[index].owner,
+        return Container(
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(15, 255, 255, 255),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: ThreadCard(
+            category: widget.thread[index].category,
+            title: widget.thread[index].title,
+            body: widget.thread[index].body,
+            upVotesBy: widget.thread[index].upVotesBy,
+            downVotesBy: widget.thread[index].downVotesBy,
+            comments: widget.thread[index].comments,
+            createdAt: widget.thread[index].createdAt,
+            owner: widget.thread[index].owner,
+          ),
         );
       },
     );
