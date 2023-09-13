@@ -45,17 +45,6 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
           ),
           label: 'Forum',
         ),
-        NavigationDestination(
-          icon: Icon(
-            Icons.settings_outlined,
-            color: Colors.white,
-          ),
-          selectedIcon: Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
-          label: 'Settings',
-        ),
       ],
     );
   }

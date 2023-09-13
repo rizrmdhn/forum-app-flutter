@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/components/bottom_navigation.dart';
+import 'package:forum_app_flutter/model/myUser.dart';
 import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
+import 'package:forum_app_flutter/model/user.dart';
 import 'package:forum_app_flutter/screen/forum_screen.dart';
 import 'package:forum_app_flutter/screen/leaderboard_screen.dart';
 
@@ -23,6 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final List<Thread> thread = threadList;
   final List<LeaderBoard> leaderBoard = leaderBoardList;
+  final User authUser = myUser;
   var currentPageIndex = 0;
 
   @override
@@ -35,10 +38,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         body: <Widget>[
           LeaderboardScreen(leaderboard: leaderBoard),
-          ForumScreen(thread: thread),
-          const Center(
-            child: Text('Settings'),
-          ),
+          ForumScreen(thread: thread, authUser: authUser),
         ][currentPageIndex],
         bottomNavigationBar: CustomBottomNavigation(
             currentPageIndex: currentPageIndex,

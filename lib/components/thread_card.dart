@@ -14,6 +14,10 @@ class ThreadCard extends StatefulWidget {
   final List<Comment> comments;
   final String createdAt;
   final User owner;
+  final bool isLiked;
+  final bool isDisliked;
+  final Function() onLikeThread;
+  final Function() onDislikeThread;
 
   const ThreadCard({
     Key? key,
@@ -26,6 +30,10 @@ class ThreadCard extends StatefulWidget {
     required this.comments,
     required this.createdAt,
     required this.owner,
+    required this.isLiked,
+    required this.isDisliked,
+    required this.onLikeThread,
+    required this.onDislikeThread,
   }) : super(key: key);
 
   @override
@@ -64,6 +72,7 @@ class ThreadCardState extends State<ThreadCard> {
               Container(
                 margin: const EdgeInsets.only(
                     left: 10, top: 0, bottom: 5, right: 5),
+                width: MediaQuery.of(context).size.width * 0.8,
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
@@ -81,6 +90,8 @@ class ThreadCardState extends State<ThreadCard> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
                   ),
                 ),
               )
@@ -105,16 +116,18 @@ class ThreadCardState extends State<ThreadCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: widget.onLikeThread,
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: const Icon(
-                          Icons.thumb_up_alt_outlined,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                        child: Icon(
+                          widget.isLiked
+                              ? Icons.thumb_up_alt
+                              : Icons.thumb_up_alt_outlined,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       Text(
@@ -128,16 +141,18 @@ class ThreadCardState extends State<ThreadCard> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: widget.onDislikeThread,
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: const Icon(
-                          Icons.thumb_down_alt_outlined,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                        child: Icon(
+                          widget.isDisliked
+                              ? Icons.thumb_down_alt
+                              : Icons.thumb_down_alt_outlined,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       Text(
@@ -151,7 +166,6 @@ class ThreadCardState extends State<ThreadCard> {
                 ),
               ),
               InkWell(
-                onTap: () {},
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   child: Row(

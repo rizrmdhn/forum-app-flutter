@@ -58,9 +58,9 @@ var threadList = [
   ),
   Thread(
     id: 'thread-2',
-    title: 'How to make a Flutter app?',
-    body: 'I want to make a Flutter app, but I don\'t know how to start.',
-    category: 'Flutter',
+    title: 'How to make a React app?',
+    body: 'I want to make a React app, but I don\'t know how to start.',
+    category: 'React',
     createdAt: '2021-10-01T00:00:00.000Z',
     owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
@@ -88,9 +88,9 @@ var threadList = [
   ),
   Thread(
     id: 'thread-3',
-    title: 'How to make a Flutter app?',
-    body: 'I want to make a Flutter app, but I don\'t know how to start.',
-    category: 'Flutter',
+    title: 'How to create a database?',
+    body: 'I want to create a database, but I don\'t know how to start.',
+    category: 'Database',
     createdAt: '2021-10-01T00:00:00.000Z',
     owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
@@ -116,9 +116,9 @@ var threadList = [
   ),
   Thread(
     id: 'thread-4',
-    title: 'How to make a Flutter app?',
-    body: 'I want to make a Flutter app, but I don\'t know how to start.',
-    category: 'Flutter',
+    title: 'How to develop a mobile app?',
+    body: 'I want to develop a mobile app, but I don\'t know how to start.',
+    category: 'Mobile',
     createdAt: '2021-10-01T00:00:00.000Z',
     owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
@@ -144,9 +144,9 @@ var threadList = [
   ),
   Thread(
     id: 'thread-5',
-    title: 'How to make a Flutter app?',
-    body: 'I want to make a Flutter app, but I don\'t know how to start.',
-    category: 'Flutter',
+    title: 'How to make a multiplatform app',
+    body: 'I want to make a multiplatform app, but I don\'t know how to start.',
+    category: 'Multiplatform',
     createdAt: '2021-10-01T00:00:00.000Z',
     owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
@@ -172,9 +172,9 @@ var threadList = [
   ),
   Thread(
     id: 'thread-6',
-    title: 'How to make a Flutter app?',
-    body: 'I want to make a Flutter app, but I don\'t know how to start.',
-    category: 'Flutter',
+    title: 'What is the best programming language?',
+    body: 'I want to know what is the best programming language to learn.',
+    category: 'General',
     createdAt: '2021-10-01T00:00:00.000Z',
     owner: User(id: 'user-1', name: 'John Doe', email: 'johndoe@mail.com'),
     upVotesBy: [
