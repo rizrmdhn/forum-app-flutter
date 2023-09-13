@@ -3,6 +3,7 @@ import 'package:forum_app_flutter/components/bottom_navigation.dart';
 import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
 import 'package:forum_app_flutter/screen/forum_screen.dart';
+import 'package:forum_app_flutter/screen/leaderboard_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,9 +34,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         body: <Widget>[
-          const Center(
-            child: Text('Leaderboard'),
-          ),
+          LeaderboardScreen(leaderboard: leaderBoard),
           ForumScreen(thread: thread),
           const Center(
             child: Text('Settings'),

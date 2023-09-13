@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/model/comment.dart';
+import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/user.dart';
+import 'package:forum_app_flutter/screen/detail_thread_screen.dart';
 
 class ThreadCard extends StatefulWidget {
+  final Thread thread;
   final String category;
   final String title;
   final String body;
@@ -14,6 +17,7 @@ class ThreadCard extends StatefulWidget {
 
   const ThreadCard({
     Key? key,
+    required this.thread,
     required this.category,
     required this.title,
     required this.body,
@@ -60,11 +64,23 @@ class ThreadCardState extends State<ThreadCard> {
               Container(
                 margin: const EdgeInsets.only(
                     left: 10, top: 0, bottom: 5, right: 5),
-                child: Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return DetailThreadScreen(thread: widget.thread);
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               )
