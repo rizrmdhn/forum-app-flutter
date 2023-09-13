@@ -33,7 +33,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: MyApp._title,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: Colors.black,
+          labelTextStyle: MaterialStateProperty.all(
+            const TextStyle(color: Colors.white),
+          ),
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        ),
       ),
       home: Scaffold(
         body: <Widget>[

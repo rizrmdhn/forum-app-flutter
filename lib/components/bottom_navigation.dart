@@ -21,7 +21,6 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
       onDestinationSelected: widget.changePage,
       selectedIndex: widget.currentPageIndex,
       backgroundColor: const Color.fromARGB(255, 34, 40, 49),
-      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       destinations: const <NavigationDestination>[
         NavigationDestination(
           icon: Icon(
