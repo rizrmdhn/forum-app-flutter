@@ -9,6 +9,10 @@ class CommentCard extends StatefulWidget {
   final User owner;
   final List<User> upVotesBy;
   final List<User> downVotesBy;
+  final bool isCommentLiked;
+  final bool isCommentDisliked;
+  final Function() onLike;
+  final Function() onDislike;
 
   const CommentCard({
     Key? key,
@@ -18,6 +22,10 @@ class CommentCard extends StatefulWidget {
     required this.owner,
     required this.upVotesBy,
     required this.downVotesBy,
+    required this.isCommentLiked,
+    required this.isCommentDisliked,
+    required this.onLike,
+    required this.onDislike,
   }) : super(key: key);
 
   @override
@@ -91,11 +99,18 @@ class CommentCardState extends State<CommentCard> {
                   children: [
                     Row(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 5),
-                          child: Icon(
-                            Icons.thumb_up_alt_outlined,
-                            color: Colors.black,
+                        InkWell(
+                          onTap: () {
+                            widget.onLike();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Icon(
+                              widget.isCommentLiked
+                                  ? Icons.thumb_up_alt
+                                  : Icons.thumb_up_alt_outlined,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         Text(
@@ -116,11 +131,18 @@ class CommentCardState extends State<CommentCard> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 5),
-                          child: Icon(
-                            Icons.thumb_up_alt_outlined,
-                            color: Colors.black,
+                        InkWell(
+                          onTap: () {
+                            widget.onDislike();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Icon(
+                              widget.isCommentDisliked
+                                  ? Icons.thumb_down_alt
+                                  : Icons.thumb_down_alt_outlined,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         Text(

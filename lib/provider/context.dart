@@ -69,4 +69,74 @@ class ContextModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  bool isCommentLiked(String threadId, String commentId) {
+    final threadIndex =
+        _threadModel.threads.indexWhere((thread) => thread.id == threadId);
+    final thread = _threadModel.threads[threadIndex];
+    final commentIndex =
+        thread.comments.indexWhere((comment) => comment.id == commentId);
+    final comment = thread.comments[commentIndex];
+    return comment.upVotesBy.any((u) => u.id == _authUserModel.authUser.id);
+  }
+
+  bool isCommentDisliked(String threadId, String commentId) {
+    final threadIndex =
+        _threadModel.threads.indexWhere((thread) => thread.id == threadId);
+    final thread = _threadModel.threads[threadIndex];
+    final commentIndex =
+        thread.comments.indexWhere((comment) => comment.id == commentId);
+    final comment = thread.comments[commentIndex];
+    return comment.downVotesBy.any((u) => u.id == _authUserModel.authUser.id);
+  }
+
+  void likeComment(String threadId, String commentId) {
+    final threadIndex =
+        _threadModel.threads.indexWhere((thread) => thread.id == threadId);
+    final thread = _threadModel.threads[threadIndex];
+    final commentIndex =
+        thread.comments.indexWhere((comment) => comment.id == commentId);
+    final comment = thread.comments[commentIndex];
+    final userIndex =
+        comment.upVotesBy.indexWhere((u) => u.id == _authUserModel.authUser.id);
+
+    final isDisliked =
+        comment.downVotesBy.any((u) => u.id == _authUserModel.authUser.id);
+
+    if (userIndex == -1) {
+      comment.upVotesBy.add(_authUserModel.authUser);
+      if (isDisliked) {
+        comment.downVotesBy.remove(_authUserModel.authUser);
+      }
+      notifyListeners();
+    } else {
+      comment.upVotesBy.removeAt(userIndex);
+      notifyListeners();
+    }
+  }
+
+  void disLikeComment(String threadId, String commentId) {
+    final threadIndex =
+        _threadModel.threads.indexWhere((thread) => thread.id == threadId);
+    final thread = _threadModel.threads[threadIndex];
+    final commentIndex =
+        thread.comments.indexWhere((comment) => comment.id == commentId);
+    final comment = thread.comments[commentIndex];
+    final userIndex = comment.downVotesBy
+        .indexWhere((u) => u.id == _authUserModel.authUser.id);
+
+    final isLiked =
+        comment.upVotesBy.any((u) => u.id == _authUserModel.authUser.id);
+
+    if (userIndex == -1) {
+      comment.downVotesBy.add(_authUserModel.authUser);
+      if (isLiked) {
+        comment.upVotesBy.remove(_authUserModel.authUser);
+      }
+      notifyListeners();
+    } else {
+      comment.downVotesBy.removeAt(userIndex);
+      notifyListeners();
+    }
+  }
 }

@@ -305,7 +305,10 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     height: widget.height >= 600
                         ? widget.height * 0.3
                         : widget.height * 0.30,
-                    child: CommentList(comment: widget.thread.comments),
+                    child: CommentList(
+                      comment: widget.thread.comments,
+                      threadId: widget.thread.id,
+                    ),
                   ),
                 ],
               ),
@@ -319,7 +322,13 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
 
 class CommentList extends StatefulWidget {
   final List<Comment> comment;
-  const CommentList({Key? key, required this.comment}) : super(key: key);
+  final String threadId;
+
+  const CommentList({
+    Key? key,
+    required this.comment,
+    required this.threadId,
+  }) : super(key: key);
 
   @override
   CommentListState createState() => CommentListState();
@@ -338,6 +347,29 @@ class CommentListState extends State<CommentList> {
           owner: widget.comment[index].owner,
           upVotesBy: widget.comment[index].upVotesBy,
           downVotesBy: widget.comment[index].downVotesBy,
+          isCommentLiked: context
+              .read<ContextModel>()
+              .isCommentLiked(widget.threadId, widget.comment[index].id),
+          isCommentDisliked: context.read<ContextModel>().isCommentDisliked(
+                widget.threadId,
+                widget.comment[index].id,
+              ),
+          onLike: () {
+            final threadAction = context.read<ContextModel>();
+
+            threadAction.likeComment(
+              widget.threadId,
+              widget.comment[index].id,
+            );
+          },
+          onDislike: () {
+            final threadAction = context.read<ContextModel>();
+
+            threadAction.disLikeComment(
+              widget.threadId,
+              widget.comment[index].id,
+            );
+          },
         );
       },
     );

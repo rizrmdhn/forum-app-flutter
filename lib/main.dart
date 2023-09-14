@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   final List<Thread> thread = threadList;
   final List<LeaderBoard> leaderBoard = leaderBoardList;
   final User authUser = myUser;
-  var currentPageIndex = 0;
+  var currentPageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
