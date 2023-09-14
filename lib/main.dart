@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   final List<Thread> thread = threadList;
   final List<LeaderBoard> leaderBoard = leaderBoardList;
   final User authUser = myUser;
-  var currentPageIndex = 1;
+  var currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +46,29 @@ class _MyAppState extends State<MyApp> {
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         ),
       ),
-      home: Scaffold(
-        body: <Widget>[
-          const LeaderboardScreen(),
-          ForumScreen(authUser: authUser),
-        ][currentPageIndex],
-        bottomNavigationBar: CustomBottomNavigation(
-            currentPageIndex: currentPageIndex,
-            changePage: (int index) {
-              setState(() {
-                currentPageIndex = index;
-              });
-            }),
+      home: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraint) {
+          return Scaffold(
+            body: <Widget>[
+              LeaderboardScreen(
+                width: constraint.maxWidth,
+                height: constraint.maxHeight,
+              ),
+              ForumScreen(
+                authUser: authUser,
+                width: constraint.maxWidth,
+                height: constraint.maxHeight,
+              ),
+            ][currentPageIndex],
+            bottomNavigationBar: CustomBottomNavigation(
+                currentPageIndex: currentPageIndex,
+                changePage: (int index) {
+                  setState(() {
+                    currentPageIndex = index;
+                  });
+                }),
+          );
+        },
       ),
     );
   }

@@ -7,8 +7,15 @@ import 'package:provider/provider.dart';
 
 class ForumScreen extends StatefulWidget {
   final User authUser;
+  final double width;
+  final double height;
 
-  const ForumScreen({Key? key, required this.authUser}) : super(key: key);
+  const ForumScreen({
+    Key? key,
+    required this.authUser,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
 
   @override
   ForumScreenState createState() => ForumScreenState();
@@ -24,6 +31,8 @@ class ForumScreenState extends State<ForumScreen> {
           child: ThreadList(
             thread: value.threadModel.threads,
             authUser: widget.authUser,
+            width: widget.width,
+            height: widget.height,
           ),
         ),
       ),

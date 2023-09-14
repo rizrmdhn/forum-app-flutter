@@ -8,11 +8,15 @@ import 'package:provider/provider.dart';
 class ThreadList extends StatefulWidget {
   final List<Thread> thread;
   final User authUser;
+  final double width;
+  final double height;
 
   const ThreadList({
     Key? key,
     required this.thread,
     required this.authUser,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -30,7 +34,12 @@ class ThreadListState extends State<ThreadList> {
             decoration: const BoxDecoration(
               color: Color.fromARGB(15, 255, 255, 255),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            margin: EdgeInsets.symmetric(
+              vertical: 5,
+              horizontal: widget.width >= 1000
+                  ? widget.width * 0.30
+                  : widget.width * 0.05,
+            ),
             child: ThreadCard(
               thread: widget.thread[index],
               category: widget.thread[index].category,
@@ -58,6 +67,8 @@ class ThreadListState extends State<ThreadList> {
                 threadAction.disLikeThread(widget.thread[index].id);
               },
               authUser: widget.authUser,
+              width: widget.width,
+              height: widget.height,
             ),
           );
         },

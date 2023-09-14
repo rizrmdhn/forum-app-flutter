@@ -19,6 +19,8 @@ class ThreadCard extends StatefulWidget {
   final Function() onLikeThread;
   final Function() onDislikeThread;
   final User authUser;
+  final double width;
+  final double height;
 
   const ThreadCard({
     Key? key,
@@ -36,6 +38,8 @@ class ThreadCard extends StatefulWidget {
     required this.onLikeThread,
     required this.onDislikeThread,
     required this.authUser,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -74,7 +78,9 @@ class ThreadCardState extends State<ThreadCard> {
               Container(
                 margin: const EdgeInsets.only(
                     left: 10, top: 0, bottom: 5, right: 5),
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: widget.width >= 1000
+                    ? widget.width * 0.30
+                    : widget.width * 0.80,
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
@@ -82,12 +88,15 @@ class ThreadCardState extends State<ThreadCard> {
                       MaterialPageRoute(
                         builder: (context) {
                           return DetailThreadScreen(
-                              thread: widget.thread,
-                              authUser: widget.authUser,
-                              isLiked: widget.isLiked,
-                              isDisliked: widget.isDisliked,
-                              onLikeThread: widget.onLikeThread,
-                              onDislikeThread: widget.onDislikeThread);
+                            thread: widget.thread,
+                            authUser: widget.authUser,
+                            isLiked: widget.isLiked,
+                            isDisliked: widget.isDisliked,
+                            onLikeThread: widget.onLikeThread,
+                            onDislikeThread: widget.onDislikeThread,
+                            width: widget.width,
+                            height: widget.height,
+                          );
                         },
                       ),
                     );
@@ -108,7 +117,9 @@ class ThreadCardState extends State<ThreadCard> {
           Row(
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: widget.width >= 1000
+                    ? widget.width * 0.30
+                    : widget.width * 0.80,
                 margin: const EdgeInsets.only(
                     left: 10, top: 10, bottom: 5, right: 5),
                 child: Text(

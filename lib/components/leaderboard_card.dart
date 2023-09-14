@@ -4,9 +4,16 @@ import 'package:forum_app_flutter/model/user.dart';
 class LeaderboardCard extends StatefulWidget {
   final User user;
   final int points;
+  final double width;
+  final double height;
 
-  const LeaderboardCard({Key? key, required this.user, required this.points})
-      : super(key: key);
+  const LeaderboardCard({
+    Key? key,
+    required this.user,
+    required this.points,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
 
   @override
   LeaderboardCardState createState() => LeaderboardCardState();
@@ -23,10 +30,11 @@ class LeaderboardCardState extends State<LeaderboardCard> {
             flex: 1,
             child: Center(
               child: Container(
-                margin: const EdgeInsets.only(bottom: 5, right: 30),
+                margin: const EdgeInsets.only(bottom: 5, right: 25),
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(20),
@@ -56,7 +64,7 @@ class LeaderboardCardState extends State<LeaderboardCard> {
             flex: 1,
             child: Center(
               child: Container(
-                margin: const EdgeInsets.only(bottom: 5, left: 40),
+                margin: const EdgeInsets.only(bottom: 5, left: 35),
                 child: Text(
                   widget.points.toString(),
                   style: const TextStyle(

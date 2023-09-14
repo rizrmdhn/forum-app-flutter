@@ -15,6 +15,8 @@ class DetailThreadScreen extends StatefulWidget {
   final bool isDisliked;
   final Function() onLikeThread;
   final Function() onDislikeThread;
+  final double width;
+  final double height;
 
   const DetailThreadScreen({
     Key? key,
@@ -24,6 +26,8 @@ class DetailThreadScreen extends StatefulWidget {
     required this.isDisliked,
     required this.onLikeThread,
     required this.onDislikeThread,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -42,7 +46,13 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 30, bottom: 5, left: 30),
+                    margin: EdgeInsets.only(
+                      top: 30,
+                      bottom: 5,
+                      left: widget.width >= 1000
+                          ? widget.width * 0.30
+                          : widget.width * 0.08,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(5),
@@ -62,8 +72,16 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5, left: 30),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: EdgeInsets.only(
+                      top: 5,
+                      bottom: 5,
+                      left: widget.width >= 1000
+                          ? widget.width * 0.30
+                          : widget.width * 0.08,
+                    ),
+                    width: widget.width >= 1000
+                        ? widget.width * 0.30
+                        : widget.width * 0.80,
                     height: 100,
                     child: Text(
                       widget.thread.body,
@@ -75,100 +93,109 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: 5, bottom: 10, left: 30, right: 10),
-                            child: InkWell(
-                              onTap: () {
-                                final threadAction =
-                                    context.read<ContextModel>();
+              Container(
+                margin: EdgeInsets.only(
+                  top: 5,
+                  bottom: 5,
+                  left: widget.width >= 1000
+                      ? widget.width * 0.30
+                      : widget.width * 0.08,
+                ),
+                child: Row(
+                  children: [
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 5, bottom: 10, right: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  final threadAction =
+                                      context.read<ContextModel>();
 
-                                threadAction.likeThread(widget.thread.id);
-                              },
-                              child: Icon(
-                                context
+                                  threadAction.likeThread(widget.thread.id);
+                                },
+                                child: Icon(
+                                  context
+                                          .read<ContextModel>()
+                                          .isLiked(widget.thread.id)
+                                      ? Icons.thumb_up_alt
+                                      : Icons.thumb_up_alt_outlined,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '${widget.thread.upVotesBy.length}',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 5, bottom: 10, left: 30, right: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  final threadAction =
+                                      context.read<ContextModel>();
+
+                                  threadAction.disLikeThread(widget.thread.id);
+                                },
+                                child: Icon(context
                                         .read<ContextModel>()
-                                        .isLiked(widget.thread.id)
-                                    ? Icons.thumb_up_alt
-                                    : Icons.thumb_up_alt_outlined,
+                                        .isDisliked(widget.thread.id)
+                                    ? Icons.thumb_down_alt
+                                    : Icons.thumb_down_alt_outlined),
                               ),
                             ),
-                          ),
-                          Text(
-                            '${widget.thread.upVotesBy.length}',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: 5, bottom: 10, left: 30, right: 10),
-                            child: InkWell(
-                              onTap: () {
-                                final threadAction =
-                                    context.read<ContextModel>();
-
-                                threadAction.disLikeThread(widget.thread.id);
-                              },
-                              child: Icon(context
-                                      .read<ContextModel>()
-                                      .isDisliked(widget.thread.id)
-                                  ? Icons.thumb_down_alt
-                                  : Icons.thumb_down_alt_outlined),
-                            ),
-                          ),
-                          Text(
-                            '${widget.thread.downVotesBy.length}',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: 5, bottom: 10, left: 30, right: 10),
-                            child: InkWell(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.comment,
+                            Text(
+                              '${widget.thread.downVotesBy.length}',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          Text(
-                            '${widget.thread.comments.length}',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 5, bottom: 10, left: 30, right: 10),
+                              child: InkWell(
+                                onTap: () {},
+                                child: const Icon(
+                                  Icons.comment,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                            Text(
+                              '${widget.thread.comments.length}',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [
@@ -177,9 +204,16 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(
-                                top: 5, bottom: 5, left: 30),
-                            width: MediaQuery.of(context).size.width * 0.6,
+                            margin: EdgeInsets.only(
+                              top: 5,
+                              bottom: 5,
+                              left: widget.width >= 1000
+                                  ? widget.width * 0.30
+                                  : widget.width * 0.08,
+                            ),
+                            width: widget.width >= 1000
+                                ? widget.width * 0.30
+                                : widget.width * 0.62,
                             child: Text(
                               DateFormatter.format(
                                 DateTime.parse(widget.thread.createdAt),
@@ -209,8 +243,16 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5, left: 30),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: EdgeInsets.only(
+                      top: 5,
+                      bottom: 5,
+                      left: widget.width >= 1000
+                          ? widget.width * 0.30
+                          : widget.width * 0.08,
+                    ),
+                    width: widget.width >= 1000
+                        ? widget.width * 0.35
+                        : widget.width * 0.80,
                     height: 1,
                     color: Colors.grey,
                   ),
@@ -219,7 +261,13 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 30, bottom: 5, left: 30),
+                    margin: EdgeInsets.only(
+                      top: 30,
+                      bottom: 5,
+                      left: widget.width >= 1000
+                          ? widget.width * 0.30
+                          : widget.width * 0.08,
+                    ),
                     child: Row(
                       children: [
                         const Text(
@@ -244,9 +292,19 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5, left: 40),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    margin: EdgeInsets.only(
+                      top: 5,
+                      bottom: 5,
+                      left: widget.width >= 1000
+                          ? widget.width * 0.30
+                          : widget.width * 0.08,
+                    ),
+                    width: widget.width >= 1000
+                        ? widget.width * 0.35
+                        : widget.width * 0.80,
+                    height: widget.height >= 600
+                        ? widget.height * 0.3
+                        : widget.height * 0.30,
                     child: CommentList(comment: widget.thread.comments),
                   ),
                 ],

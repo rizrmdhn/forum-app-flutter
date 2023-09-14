@@ -6,7 +6,13 @@ import 'package:forum_app_flutter/provider/context.dart';
 import 'package:provider/provider.dart';
 
 class LeaderboardScreen extends StatefulWidget {
-  const LeaderboardScreen({Key? key}) : super(key: key);
+  final double width;
+  final double height;
+  const LeaderboardScreen({
+    Key? key,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
 
   @override
   LeaderboardScreenState createState() => LeaderboardScreenState();
@@ -58,7 +64,10 @@ class LeaderboardScreenState extends State<LeaderboardScreen> {
                 ),
                 Expanded(
                   child: LeaderboardList(
-                      leaderboard: value.leaderboardModel.leaderBoard),
+                    leaderboard: value.leaderboardModel.leaderBoard,
+                    width: widget.width,
+                    height: widget.height,
+                  ),
                 ),
               ],
             ),
@@ -71,9 +80,15 @@ class LeaderboardScreenState extends State<LeaderboardScreen> {
 
 class LeaderboardList extends StatefulWidget {
   final List<LeaderBoard> leaderboard;
+  final double width;
+  final double height;
 
-  const LeaderboardList({Key? key, required this.leaderboard})
-      : super(key: key);
+  const LeaderboardList({
+    Key? key,
+    required this.leaderboard,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
 
   @override
   LeaderboardListState createState() => LeaderboardListState();
@@ -93,6 +108,8 @@ class LeaderboardListState extends State<LeaderboardList> {
           child: LeaderboardCard(
             user: widget.leaderboard[index].user,
             points: widget.leaderboard[index].score,
+            width: widget.width,
+            height: widget.height,
           ),
         );
       },
