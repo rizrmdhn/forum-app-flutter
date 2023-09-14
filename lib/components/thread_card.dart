@@ -18,6 +18,7 @@ class ThreadCard extends StatefulWidget {
   final bool isDisliked;
   final Function() onLikeThread;
   final Function() onDislikeThread;
+  final User authUser;
 
   const ThreadCard({
     Key? key,
@@ -34,6 +35,7 @@ class ThreadCard extends StatefulWidget {
     required this.isDisliked,
     required this.onLikeThread,
     required this.onDislikeThread,
+    required this.authUser,
   }) : super(key: key);
 
   @override
@@ -79,7 +81,13 @@ class ThreadCardState extends State<ThreadCard> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DetailThreadScreen(thread: widget.thread);
+                          return DetailThreadScreen(
+                              thread: widget.thread,
+                              authUser: widget.authUser,
+                              isLiked: widget.isLiked,
+                              isDisliked: widget.isDisliked,
+                              onLikeThread: widget.onLikeThread,
+                              onDislikeThread: widget.onDislikeThread);
                         },
                       ),
                     );

@@ -4,11 +4,16 @@ import 'package:forum_app_flutter/model/myUser.dart';
 import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
 import 'package:forum_app_flutter/model/user.dart';
+import 'package:forum_app_flutter/provider/context.dart';
 import 'package:forum_app_flutter/screen/forum_screen.dart';
 import 'package:forum_app_flutter/screen/leaderboard_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ContextModel(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -26,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   final List<Thread> thread = threadList;
   final List<LeaderBoard> leaderBoard = leaderBoardList;
   final User authUser = myUser;
-  var currentPageIndex = 0;
+  var currentPageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +48,8 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         body: <Widget>[
-          LeaderboardScreen(leaderboard: leaderBoard),
-          ForumScreen(thread: thread, authUser: authUser),
+          const LeaderboardScreen(),
+          ForumScreen(authUser: authUser),
         ][currentPageIndex],
         bottomNavigationBar: CustomBottomNavigation(
             currentPageIndex: currentPageIndex,

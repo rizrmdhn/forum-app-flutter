@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/components/app_bar.dart';
 import 'package:forum_app_flutter/components/leaderboard_card.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
+import 'package:forum_app_flutter/provider/context.dart';
+import 'package:provider/provider.dart';
 
 class LeaderboardScreen extends StatefulWidget {
-  final List<LeaderBoard> leaderboard;
-
-  const LeaderboardScreen({Key? key, required this.leaderboard})
-      : super(key: key);
+  const LeaderboardScreen({Key? key}) : super(key: key);
 
   @override
   LeaderboardScreenState createState() => LeaderboardScreenState();
@@ -16,51 +15,56 @@ class LeaderboardScreen extends StatefulWidget {
 class LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'Leaderboard', center: true),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
+    return Consumer<ContextModel>(
+      builder: (context, value, child) {
+        return Scaffold(
+          appBar: const CustomAppBar(title: 'Leaderboard', center: true),
+          body: Center(
+            child: Column(
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 25, bottom: 25),
-                      child: const Text(
-                        'Pengguna',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 25, bottom: 25),
+                          child: const Text(
+                            'Pengguna',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 25, bottom: 25),
+                          child: const Text(
+                            'Skor',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 25, bottom: 25),
-                      child: const Text(
-                        'Skor',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: LeaderboardList(
+                      leaderboard: value.leaderboardModel.leaderBoard),
                 ),
               ],
             ),
-            Expanded(
-              child: LeaderboardList(leaderboard: widget.leaderboard),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

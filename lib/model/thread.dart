@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/model/comment.dart';
 import 'package:forum_app_flutter/model/user.dart';
 
@@ -25,6 +26,57 @@ class Thread {
     required this.comments,
     required this.totalComments,
   });
+}
+
+class ThreadModel extends ChangeNotifier {
+  final List<Thread> _thread = threadList;
+  List<Thread> get threads => _thread;
+
+  bool isLiked(User user, Thread thread) {
+    return thread.upVotesBy.any((u) => u.id == user.id);
+  }
+
+  bool isDisliked(User user, Thread thread) {
+    return thread.downVotesBy.any((u) => u.id == user.id);
+  }
+
+  void likeThread(String threadId, User user) {
+    final threadIndex = _thread.indexWhere((thread) => thread.id == threadId);
+    final thread = _thread[threadIndex];
+    final userIndex = thread.upVotesBy.indexWhere((u) => u.id == user.id);
+
+    final isDisliked = thread.downVotesBy.any((u) => u.id == user.id);
+
+    if (userIndex == -1) {
+      thread.upVotesBy.add(user);
+      if (isDisliked) {
+        thread.downVotesBy.remove(user);
+      }
+      notifyListeners();
+    } else {
+      thread.upVotesBy.removeAt(userIndex);
+      notifyListeners();
+    }
+  }
+
+  void disLikeThread(String threadId, User user) {
+    final threadIndex = _thread.indexWhere((thread) => thread.id == threadId);
+    final thread = _thread[threadIndex];
+    final userIndex = thread.downVotesBy.indexWhere((u) => u.id == user.id);
+
+    final isLiked = thread.upVotesBy.any((u) => u.id == user.id);
+
+    if (userIndex == -1) {
+      thread.downVotesBy.add(user);
+      if (isLiked) {
+        thread.upVotesBy.remove(user);
+      }
+      notifyListeners();
+    } else {
+      thread.downVotesBy.removeAt(userIndex);
+      notifyListeners();
+    }
+  }
 }
 
 var threadList = [

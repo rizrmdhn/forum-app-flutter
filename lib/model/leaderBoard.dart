@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/model/user.dart';
 
 class LeaderBoard {
@@ -8,6 +9,11 @@ class LeaderBoard {
     required this.user,
     required this.score,
   });
+}
+
+class LeaderboardModel extends ChangeNotifier {
+  final List<LeaderBoard> _leaderBoard = leaderBoardList;
+  List<LeaderBoard> get leaderBoard => _leaderBoard;
 }
 
 var leaderBoardList = [
