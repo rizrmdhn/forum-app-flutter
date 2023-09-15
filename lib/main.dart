@@ -61,12 +61,15 @@ class _MyAppState extends State<MyApp> {
               ),
             ][currentPageIndex],
             bottomNavigationBar: CustomBottomNavigation(
-                currentPageIndex: currentPageIndex,
-                changePage: (int index) {
-                  setState(() {
+              currentPageIndex: currentPageIndex,
+              changePage: (int index) {
+                setState(
+                  () {
                     currentPageIndex = index;
-                  });
-                }),
+                  },
+                );
+              },
+            ),
           );
         },
       ),

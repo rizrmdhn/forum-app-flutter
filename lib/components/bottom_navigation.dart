@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavigation extends StatefulWidget {
+class CustomBottomNavigation extends StatelessWidget {
   final int currentPageIndex;
   final Function(int) changePage;
 
@@ -11,15 +11,10 @@ class CustomBottomNavigation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  CustomBottomNavigationState createState() => CustomBottomNavigationState();
-}
-
-class CustomBottomNavigationState extends State<CustomBottomNavigation> {
-  @override
   Widget build(BuildContext context) {
     return NavigationBar(
-      onDestinationSelected: widget.changePage,
-      selectedIndex: widget.currentPageIndex,
+      onDestinationSelected: changePage,
+      selectedIndex: currentPageIndex,
       backgroundColor: const Color.fromARGB(255, 34, 40, 49),
       destinations: const <NavigationDestination>[
         NavigationDestination(
