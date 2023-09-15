@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forum_app_flutter/model/comment.dart';
 import 'package:forum_app_flutter/model/leaderboard.dart';
 import 'package:forum_app_flutter/model/myuser.dart';
 import 'package:forum_app_flutter/model/thread.dart';
@@ -24,6 +25,24 @@ class ContextModel extends ChangeNotifier {
     return _threadModel.threads.where((element) => element.id == threadId).any(
         (thread) =>
             thread.downVotesBy.any((u) => u.id == _authUserModel.authUser.id));
+  }
+
+  void addThread(String title, String body, String category) {
+    final newThread = Thread(
+      id: DateTime.now().toString(),
+      title: title,
+      body: body,
+      category: category,
+      createdAt: DateTime.now().toString(),
+      owner: _authUserModel.authUser,
+      upVotesBy: [],
+      downVotesBy: [],
+      comments: [],
+      totalComments: 0,
+    );
+
+    _threadModel.threads.add(newThread);
+    notifyListeners();
   }
 
   void likeThread(String threadId) {
@@ -88,6 +107,25 @@ class ContextModel extends ChangeNotifier {
         thread.comments.indexWhere((comment) => comment.id == commentId);
     final comment = thread.comments[commentIndex];
     return comment.downVotesBy.any((u) => u.id == _authUserModel.authUser.id);
+  }
+
+  void addComment(String threadId, String body) {
+    final threadIndex =
+        _threadModel.threads.indexWhere((thread) => thread.id == threadId);
+    final thread = _threadModel.threads[threadIndex];
+
+    final newComment = Comment(
+      id: DateTime.now().toString(),
+      body: body,
+      createdAt: DateTime.now().toString(),
+      owner: _authUserModel.authUser,
+      upVotesBy: [],
+      downVotesBy: [],
+    );
+
+    thread.comments.add(newComment);
+    thread.totalComments += 1;
+    notifyListeners();
   }
 
   void likeComment(String threadId, String commentId) {

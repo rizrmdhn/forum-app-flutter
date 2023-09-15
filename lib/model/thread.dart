@@ -58,25 +58,20 @@ class ThreadModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+}
 
-  void disLikeThread(String threadId, User user) {
-    final threadIndex = _thread.indexWhere((thread) => thread.id == threadId);
-    final thread = _thread[threadIndex];
-    final userIndex = thread.downVotesBy.indexWhere((u) => u.id == user.id);
+class ThreadInput {
+  String title;
+  String body;
+  String category;
+  User owner;
 
-    final isLiked = thread.upVotesBy.any((u) => u.id == user.id);
-
-    if (userIndex == -1) {
-      thread.downVotesBy.add(user);
-      if (isLiked) {
-        thread.upVotesBy.remove(user);
-      }
-      notifyListeners();
-    } else {
-      thread.downVotesBy.removeAt(userIndex);
-      notifyListeners();
-    }
-  }
+  ThreadInput({
+    required this.title,
+    required this.body,
+    required this.category,
+    required this.owner,
+  });
 }
 
 var threadList = [

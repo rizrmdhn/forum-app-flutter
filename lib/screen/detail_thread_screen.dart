@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/components/app_bar.dart';
 import 'package:forum_app_flutter/components/comment_card.dart';
+import 'package:forum_app_flutter/components/create_comment.dart';
 import 'package:forum_app_flutter/model/comment.dart';
 import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/user.dart';
@@ -36,145 +37,188 @@ class DetailThreadScreen extends StatelessWidget {
       builder: (context, value, child) => Scaffold(
         appBar: CustomAppBar(title: thread.title),
         body: Scaffold(
-          body: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 30,
-                      bottom: 5,
-                      left: width >= 1000 ? width * 0.30 : width * 0.08,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(5),
-                    child: Text(
-                      '#${thread.category}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                      left: width >= 1000 ? width * 0.30 : width * 0.08,
-                    ),
-                    width: width >= 1000 ? width * 0.30 : width * 0.80,
-                    height: 100,
-                    child: Text(
-                      thread.body,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 5,
-                  bottom: 5,
-                  left: width >= 1000 ? width * 0.30 : width * 0.08,
-                ),
-                child: Row(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  top: 5, bottom: 10, right: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  final threadAction =
-                                      context.read<ContextModel>();
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 30,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        '#${thread.category}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      width: width >= 1000 ? width * 0.30 : width * 0.80,
+                      height: 100,
+                      child: Text(
+                        thread.body,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 5,
+                    bottom: 5,
+                    left: width >= 1000 ? width * 0.30 : width * 0.08,
+                  ),
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 5, bottom: 10, right: 10),
+                                child: InkWell(
+                                  onTap: () {
+                                    final threadAction =
+                                        context.read<ContextModel>();
 
-                                  threadAction.likeThread(thread.id);
-                                },
-                                child: Icon(
-                                  context
+                                    threadAction.likeThread(thread.id);
+                                  },
+                                  child: Icon(
+                                    context
+                                            .read<ContextModel>()
+                                            .isLiked(thread.id)
+                                        ? Icons.thumb_up_alt
+                                        : Icons.thumb_up_alt_outlined,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${thread.upVotesBy.length}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 5, bottom: 10, left: 30, right: 10),
+                                child: InkWell(
+                                  onTap: () {
+                                    final threadAction =
+                                        context.read<ContextModel>();
+
+                                    threadAction.disLikeThread(thread.id);
+                                  },
+                                  child: Icon(context
                                           .read<ContextModel>()
-                                          .isLiked(thread.id)
-                                      ? Icons.thumb_up_alt
-                                      : Icons.thumb_up_alt_outlined,
+                                          .isDisliked(thread.id)
+                                      ? Icons.thumb_down_alt
+                                      : Icons.thumb_down_alt_outlined),
                                 ),
                               ),
-                            ),
-                            Text(
-                              '${thread.upVotesBy.length}',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                '${thread.downVotesBy.length}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    top: 5, bottom: 10, left: 30, right: 10),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: const Icon(
+                                    Icons.comment,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${thread.comments.length}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Column(
                       children: [
                         Row(
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(
-                                  top: 5, bottom: 10, left: 30, right: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  final threadAction =
-                                      context.read<ContextModel>();
-
-                                  threadAction.disLikeThread(thread.id);
-                                },
-                                child: Icon(context
-                                        .read<ContextModel>()
-                                        .isDisliked(thread.id)
-                                    ? Icons.thumb_down_alt
-                                    : Icons.thumb_down_alt_outlined),
+                              margin: EdgeInsets.only(
+                                top: 5,
+                                bottom: 5,
+                                left:
+                                    width >= 1000 ? width * 0.30 : width * 0.08,
                               ),
-                            ),
-                            Text(
-                              '${thread.downVotesBy.length}',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  top: 5, bottom: 10, left: 30, right: 10),
-                              child: InkWell(
-                                onTap: () {},
-                                child: const Icon(
-                                  Icons.comment,
+                              width:
+                                  width >= 1000 ? width * 0.30 : width * 0.62,
+                              child: Text(
+                                DateFormatter.format(
+                                  DateTime.parse(thread.createdAt),
+                                ),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            Text(
-                              '${thread.comments.length}',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                            Container(
+                              margin: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: Text(
+                                ' ${thread.owner.name}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -183,107 +227,83 @@ class DetailThreadScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Row(
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      width: width >= 1000 ? width * 0.35 : width * 0.80,
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 20,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      width: width >= 1000 ? width * 0.35 : width * 0.80,
+                      child: CreateComment(
+                        threadId: thread.id,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 30,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      child: Row(
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: 5,
-                              bottom: 5,
-                              left: width >= 1000 ? width * 0.30 : width * 0.08,
-                            ),
-                            width: width >= 1000 ? width * 0.30 : width * 0.62,
-                            child: Text(
-                              DateFormatter.format(
-                                DateTime.parse(thread.createdAt),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          const Text(
+                            'Komentar',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 5, bottom: 5),
-                            child: Text(
-                              ' ${thread.owner.name}',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          Text(
+                            ' (${thread.comments.length})',
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
-                    width: width >= 1000 ? width * 0.35 : width * 0.80,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 30,
-                      bottom: 5,
-                      left: width >= 1000 ? width * 0.30 : width * 0.08,
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                        bottom: 5,
+                        left: width >= 1000 ? width * 0.30 : width * 0.08,
+                      ),
+                      width: width >= 1000 ? width * 0.35 : width * 0.80,
+                      height: height >= 400 ? height * 0.5 : height * 0.01,
+                      child: CommentList(
+                        comment: thread.comments,
+                        threadId: thread.id,
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Komentar',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          ' (${thread.comments.length})',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                      left: width >= 1000 ? width * 0.30 : width * 0.08,
-                    ),
-                    width: width >= 1000 ? width * 0.35 : width * 0.80,
-                    height: height >= 600 ? height * 0.3 : height * 0.30,
-                    child: CommentList(
-                      comment: thread.comments,
-                      threadId: thread.id,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
