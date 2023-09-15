@@ -5,20 +5,16 @@ import 'package:forum_app_flutter/model/leaderboard.dart';
 import 'package:forum_app_flutter/provider/context.dart';
 import 'package:provider/provider.dart';
 
-class LeaderboardScreen extends StatefulWidget {
+class LeaderboardScreen extends StatelessWidget {
   final double width;
   final double height;
+
   const LeaderboardScreen({
     Key? key,
     required this.width,
     required this.height,
   }) : super(key: key);
 
-  @override
-  LeaderboardScreenState createState() => LeaderboardScreenState();
-}
-
-class LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ContextModel>(
@@ -65,8 +61,8 @@ class LeaderboardScreenState extends State<LeaderboardScreen> {
                 Expanded(
                   child: LeaderboardList(
                     leaderboard: value.leaderboardModel.leaderBoard,
-                    width: widget.width,
-                    height: widget.height,
+                    width: width,
+                    height: height,
                   ),
                 ),
               ],
@@ -78,7 +74,7 @@ class LeaderboardScreenState extends State<LeaderboardScreen> {
   }
 }
 
-class LeaderboardList extends StatefulWidget {
+class LeaderboardList extends StatelessWidget {
   final List<LeaderBoard> leaderboard;
   final double width;
   final double height;
@@ -91,14 +87,9 @@ class LeaderboardList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  LeaderboardListState createState() => LeaderboardListState();
-}
-
-class LeaderboardListState extends State<LeaderboardList> {
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.leaderboard.length,
+      itemCount: leaderboard.length,
       itemBuilder: (context, index) {
         return Container(
           decoration: const BoxDecoration(
@@ -106,10 +97,10 @@ class LeaderboardListState extends State<LeaderboardList> {
           ),
           margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           child: LeaderboardCard(
-            user: widget.leaderboard[index].user,
-            points: widget.leaderboard[index].score,
-            width: widget.width,
-            height: widget.height,
+            user: leaderboard[index].user,
+            points: leaderboard[index].score,
+            width: width,
+            height: height,
           ),
         );
       },

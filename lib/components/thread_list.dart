@@ -5,7 +5,7 @@ import 'package:forum_app_flutter/model/user.dart';
 import 'package:forum_app_flutter/provider/context.dart';
 import 'package:provider/provider.dart';
 
-class ThreadList extends StatefulWidget {
+class ThreadList extends StatelessWidget {
   final List<Thread> thread;
   final User authUser;
   final double width;
@@ -20,15 +20,10 @@ class ThreadList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  ThreadListState createState() => ThreadListState();
-}
-
-class ThreadListState extends State<ThreadList> {
-  @override
   Widget build(BuildContext context) {
     return Consumer<ContextModel>(
       builder: (context, value, child) => ListView.builder(
-        itemCount: widget.thread.length,
+        itemCount: thread.length,
         itemBuilder: (context, index) {
           return Container(
             decoration: const BoxDecoration(
@@ -36,39 +31,36 @@ class ThreadListState extends State<ThreadList> {
             ),
             margin: EdgeInsets.symmetric(
               vertical: 5,
-              horizontal: widget.width >= 1000
-                  ? widget.width * 0.30
-                  : widget.width * 0.05,
+              horizontal: width >= 1000 ? width * 0.30 : width * 0.05,
             ),
             child: ThreadCard(
-              thread: widget.thread[index],
-              category: widget.thread[index].category,
-              title: widget.thread[index].title,
-              body: widget.thread[index].body,
-              upVotesBy: widget.thread[index].upVotesBy,
-              downVotesBy: widget.thread[index].downVotesBy,
-              comments: widget.thread[index].comments,
-              createdAt: widget.thread[index].createdAt,
-              owner: widget.thread[index].owner,
+              thread: thread[index],
+              category: thread[index].category,
+              title: thread[index].title,
+              body: thread[index].body,
+              upVotesBy: thread[index].upVotesBy,
+              downVotesBy: thread[index].downVotesBy,
+              comments: thread[index].comments,
+              createdAt: thread[index].createdAt,
+              owner: thread[index].owner,
               isLiked: context.read<ContextModel>().isLiked(
-                    widget.thread[index].id,
+                    thread[index].id,
                   ),
-              isDisliked: context
-                  .read<ContextModel>()
-                  .isDisliked(widget.thread[index].id),
+              isDisliked:
+                  context.read<ContextModel>().isDisliked(thread[index].id),
               onLikeThread: () {
                 final threadAction = context.read<ContextModel>();
 
-                threadAction.likeThread(widget.thread[index].id);
+                threadAction.likeThread(thread[index].id);
               },
               onDislikeThread: () {
                 final threadAction = context.read<ContextModel>();
 
-                threadAction.disLikeThread(widget.thread[index].id);
+                threadAction.disLikeThread(thread[index].id);
               },
-              authUser: widget.authUser,
-              width: widget.width,
-              height: widget.height,
+              authUser: authUser,
+              width: width,
+              height: height,
             ),
           );
         },

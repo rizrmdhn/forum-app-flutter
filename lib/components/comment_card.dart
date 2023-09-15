@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/model/user.dart';
 import 'package:forum_app_flutter/utils/date_formatter.dart';
 
-class CommentCard extends StatefulWidget {
+class CommentCard extends StatelessWidget {
   final String id;
   final String body;
   final String createdAt;
@@ -29,11 +29,6 @@ class CommentCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  CommentCardState createState() => CommentCardState();
-}
-
-class CommentCardState extends State<CommentCard> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -49,13 +44,13 @@ class CommentCardState extends State<CommentCard> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'https://ui-avatars.com/api/?name=${widget.owner.name}&length=1&background=random&size=128',
+                        'https://ui-avatars.com/api/?name=${owner.name}&length=1&background=random&size=128',
                         width: 28,
                       ),
                     ),
                   ),
                   Text(
-                    widget.owner.name,
+                    owner.name,
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.normal,
@@ -65,7 +60,7 @@ class CommentCardState extends State<CommentCard> {
               ),
               Text(
                 DateFormatter.format(
-                  DateTime.parse(widget.createdAt),
+                  DateTime.parse(createdAt),
                 ),
                 style: const TextStyle(
                   fontSize: 15,
@@ -80,7 +75,7 @@ class CommentCardState extends State<CommentCard> {
           child: Row(
             children: [
               Text(
-                widget.body,
+                body,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
@@ -101,12 +96,12 @@ class CommentCardState extends State<CommentCard> {
                       children: [
                         InkWell(
                           onTap: () {
-                            widget.onLike();
+                            onLike();
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Icon(
-                              widget.isCommentLiked
+                              isCommentLiked
                                   ? Icons.thumb_up_alt
                                   : Icons.thumb_up_alt_outlined,
                               color: Colors.black,
@@ -114,7 +109,7 @@ class CommentCardState extends State<CommentCard> {
                           ),
                         ),
                         Text(
-                          '${widget.upVotesBy.length}',
+                          '${upVotesBy.length}',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -133,12 +128,12 @@ class CommentCardState extends State<CommentCard> {
                       children: [
                         InkWell(
                           onTap: () {
-                            widget.onDislike();
+                            onDislike();
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Icon(
-                              widget.isCommentDisliked
+                              isCommentDisliked
                                   ? Icons.thumb_down_alt
                                   : Icons.thumb_down_alt_outlined,
                               color: Colors.black,
@@ -146,7 +141,7 @@ class CommentCardState extends State<CommentCard> {
                           ),
                         ),
                         Text(
-                          '${widget.downVotesBy.length}',
+                          '${downVotesBy.length}',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

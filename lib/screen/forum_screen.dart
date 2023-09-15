@@ -5,7 +5,7 @@ import 'package:forum_app_flutter/model/user.dart';
 import 'package:forum_app_flutter/provider/context.dart';
 import 'package:provider/provider.dart';
 
-class ForumScreen extends StatefulWidget {
+class ForumScreen extends StatelessWidget {
   final User authUser;
   final double width;
   final double height;
@@ -18,11 +18,6 @@ class ForumScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  ForumScreenState createState() => ForumScreenState();
-}
-
-class ForumScreenState extends State<ForumScreen> {
-  @override
   Widget build(BuildContext context) {
     return Consumer<ContextModel>(
       builder: (context, value, child) => Scaffold(
@@ -30,9 +25,9 @@ class ForumScreenState extends State<ForumScreen> {
         body: Center(
           child: ThreadList(
             thread: value.threadModel.threads,
-            authUser: widget.authUser,
-            width: widget.width,
-            height: widget.height,
+            authUser: authUser,
+            width: width,
+            height: height,
           ),
         ),
       ),

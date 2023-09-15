@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forum_app_flutter/model/user.dart';
 
-class LeaderboardCard extends StatefulWidget {
+class LeaderboardCard extends StatelessWidget {
   final User user;
   final int points;
   final double width;
@@ -15,11 +15,6 @@ class LeaderboardCard extends StatefulWidget {
     required this.height,
   }) : super(key: key);
 
-  @override
-  LeaderboardCardState createState() => LeaderboardCardState();
-}
-
-class LeaderboardCardState extends State<LeaderboardCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,14 +34,14 @@ class LeaderboardCardState extends State<LeaderboardCard> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.network(
-                            'https://ui-avatars.com/api/?name=${widget.user.name}&length=1&background=random&size=128',
+                            'https://ui-avatars.com/api/?name=${user.name}&length=1&background=random&size=128',
                             width: 28,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                            widget.user.name.toString(),
+                            user.name.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -66,7 +61,7 @@ class LeaderboardCardState extends State<LeaderboardCard> {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 5, left: 35),
                 child: Text(
-                  widget.points.toString(),
+                  points.toString(),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,

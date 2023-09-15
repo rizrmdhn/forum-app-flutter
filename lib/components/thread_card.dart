@@ -4,7 +4,7 @@ import 'package:forum_app_flutter/model/thread.dart';
 import 'package:forum_app_flutter/model/user.dart';
 import 'package:forum_app_flutter/screen/detail_thread_screen.dart';
 
-class ThreadCard extends StatefulWidget {
+class ThreadCard extends StatelessWidget {
   final Thread thread;
   final String category;
   final String title;
@@ -43,11 +43,6 @@ class ThreadCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  ThreadCardState createState() => ThreadCardState();
-}
-
-class ThreadCardState extends State<ThreadCard> {
-  @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -67,7 +62,7 @@ class ThreadCardState extends State<ThreadCard> {
                   borderRadius: BorderRadius.all(Radius.circular(2)),
                 ),
                 child: Text(
-                  '#${widget.category}',
+                  '#$category',
                   style: const TextStyle(color: Colors.white),
                 ),
               )
@@ -78,9 +73,7 @@ class ThreadCardState extends State<ThreadCard> {
               Container(
                 margin: const EdgeInsets.only(
                     left: 10, top: 0, bottom: 5, right: 5),
-                width: widget.width >= 1000
-                    ? widget.width * 0.30
-                    : widget.width * 0.80,
+                width: width >= 1000 ? width * 0.30 : width * 0.80,
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
@@ -88,21 +81,21 @@ class ThreadCardState extends State<ThreadCard> {
                       MaterialPageRoute(
                         builder: (context) {
                           return DetailThreadScreen(
-                            thread: widget.thread,
-                            authUser: widget.authUser,
-                            isLiked: widget.isLiked,
-                            isDisliked: widget.isDisliked,
-                            onLikeThread: widget.onLikeThread,
-                            onDislikeThread: widget.onDislikeThread,
-                            width: widget.width,
-                            height: widget.height,
+                            thread: thread,
+                            authUser: authUser,
+                            isLiked: isLiked,
+                            isDisliked: isDisliked,
+                            onLikeThread: onLikeThread,
+                            onDislikeThread: onDislikeThread,
+                            width: width,
+                            height: height,
                           );
                         },
                       ),
                     );
                   },
                   child: Text(
-                    widget.title,
+                    title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -117,13 +110,11 @@ class ThreadCardState extends State<ThreadCard> {
           Row(
             children: <Widget>[
               Container(
-                width: widget.width >= 1000
-                    ? widget.width * 0.30
-                    : widget.width * 0.80,
+                width: width >= 1000 ? width * 0.30 : width * 0.80,
                 margin: const EdgeInsets.only(
                     left: 10, top: 10, bottom: 5, right: 5),
                 child: Text(
-                  widget.body,
+                  body,
                   style: const TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
@@ -135,7 +126,7 @@ class ThreadCardState extends State<ThreadCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
-                onTap: widget.onLikeThread,
+                onTap: onLikeThread,
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   child: Row(
@@ -143,14 +134,14 @@ class ThreadCardState extends State<ThreadCard> {
                       Container(
                         margin: const EdgeInsets.only(right: 5),
                         child: Icon(
-                          widget.isLiked
+                          isLiked
                               ? Icons.thumb_up_alt
                               : Icons.thumb_up_alt_outlined,
                           color: const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       Text(
-                        widget.upVotesBy.length.toString(),
+                        upVotesBy.length.toString(),
                         style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),
@@ -160,7 +151,7 @@ class ThreadCardState extends State<ThreadCard> {
                 ),
               ),
               InkWell(
-                onTap: widget.onDislikeThread,
+                onTap: onDislikeThread,
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   child: Row(
@@ -168,14 +159,14 @@ class ThreadCardState extends State<ThreadCard> {
                       Container(
                         margin: const EdgeInsets.only(right: 5),
                         child: Icon(
-                          widget.isDisliked
+                          isDisliked
                               ? Icons.thumb_down_alt
                               : Icons.thumb_down_alt_outlined,
                           color: const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       Text(
-                        widget.downVotesBy.length.toString(),
+                        downVotesBy.length.toString(),
                         style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),
@@ -197,7 +188,7 @@ class ThreadCardState extends State<ThreadCard> {
                         ),
                       ),
                       Text(
-                        widget.comments.length.toString(),
+                        comments.length.toString(),
                         style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),

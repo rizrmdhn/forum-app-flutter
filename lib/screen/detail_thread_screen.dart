@@ -8,7 +8,7 @@ import 'package:forum_app_flutter/provider/context.dart';
 import 'package:forum_app_flutter/utils/date_formatter.dart';
 import 'package:provider/provider.dart';
 
-class DetailThreadScreen extends StatefulWidget {
+class DetailThreadScreen extends StatelessWidget {
   final Thread thread;
   final User authUser;
   final bool isLiked;
@@ -31,15 +31,10 @@ class DetailThreadScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  DetailThreadScreenState createState() => DetailThreadScreenState();
-}
-
-class DetailThreadScreenState extends State<DetailThreadScreen> {
-  @override
   Widget build(BuildContext context) {
     return Consumer<ContextModel>(
       builder: (context, value, child) => Scaffold(
-        appBar: CustomAppBar(title: widget.thread.title),
+        appBar: CustomAppBar(title: thread.title),
         body: Scaffold(
           body: Column(
             children: [
@@ -49,9 +44,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     margin: EdgeInsets.only(
                       top: 30,
                       bottom: 5,
-                      left: widget.width >= 1000
-                          ? widget.width * 0.30
-                          : widget.width * 0.08,
+                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.grey,
@@ -59,7 +52,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     ),
                     padding: const EdgeInsets.all(5),
                     child: Text(
-                      '#${widget.thread.category}',
+                      '#${thread.category}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -75,16 +68,12 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     margin: EdgeInsets.only(
                       top: 5,
                       bottom: 5,
-                      left: widget.width >= 1000
-                          ? widget.width * 0.30
-                          : widget.width * 0.08,
+                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
-                    width: widget.width >= 1000
-                        ? widget.width * 0.30
-                        : widget.width * 0.80,
+                    width: width >= 1000 ? width * 0.30 : width * 0.80,
                     height: 100,
                     child: Text(
-                      widget.thread.body,
+                      thread.body,
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.normal,
@@ -97,9 +86,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                 margin: EdgeInsets.only(
                   top: 5,
                   bottom: 5,
-                  left: widget.width >= 1000
-                      ? widget.width * 0.30
-                      : widget.width * 0.08,
+                  left: width >= 1000 ? width * 0.30 : width * 0.08,
                 ),
                 child: Row(
                   children: [
@@ -115,19 +102,19 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                                   final threadAction =
                                       context.read<ContextModel>();
 
-                                  threadAction.likeThread(widget.thread.id);
+                                  threadAction.likeThread(thread.id);
                                 },
                                 child: Icon(
                                   context
                                           .read<ContextModel>()
-                                          .isLiked(widget.thread.id)
+                                          .isLiked(thread.id)
                                       ? Icons.thumb_up_alt
                                       : Icons.thumb_up_alt_outlined,
                                 ),
                               ),
                             ),
                             Text(
-                              '${widget.thread.upVotesBy.length}',
+                              '${thread.upVotesBy.length}',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -149,17 +136,17 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                                   final threadAction =
                                       context.read<ContextModel>();
 
-                                  threadAction.disLikeThread(widget.thread.id);
+                                  threadAction.disLikeThread(thread.id);
                                 },
                                 child: Icon(context
                                         .read<ContextModel>()
-                                        .isDisliked(widget.thread.id)
+                                        .isDisliked(thread.id)
                                     ? Icons.thumb_down_alt
                                     : Icons.thumb_down_alt_outlined),
                               ),
                             ),
                             Text(
-                              '${widget.thread.downVotesBy.length}',
+                              '${thread.downVotesBy.length}',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -184,7 +171,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                               ),
                             ),
                             Text(
-                              '${widget.thread.comments.length}',
+                              '${thread.comments.length}',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -207,16 +194,12 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                             margin: EdgeInsets.only(
                               top: 5,
                               bottom: 5,
-                              left: widget.width >= 1000
-                                  ? widget.width * 0.30
-                                  : widget.width * 0.08,
+                              left: width >= 1000 ? width * 0.30 : width * 0.08,
                             ),
-                            width: widget.width >= 1000
-                                ? widget.width * 0.30
-                                : widget.width * 0.62,
+                            width: width >= 1000 ? width * 0.30 : width * 0.62,
                             child: Text(
                               DateFormatter.format(
-                                DateTime.parse(widget.thread.createdAt),
+                                DateTime.parse(thread.createdAt),
                               ),
                               style: const TextStyle(
                                 fontSize: 15,
@@ -227,7 +210,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
-                              ' ${widget.thread.owner.name}',
+                              ' ${thread.owner.name}',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -246,13 +229,9 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     margin: EdgeInsets.only(
                       top: 5,
                       bottom: 5,
-                      left: widget.width >= 1000
-                          ? widget.width * 0.30
-                          : widget.width * 0.08,
+                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
-                    width: widget.width >= 1000
-                        ? widget.width * 0.35
-                        : widget.width * 0.80,
+                    width: width >= 1000 ? width * 0.35 : width * 0.80,
                     height: 1,
                     color: Colors.grey,
                   ),
@@ -264,9 +243,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     margin: EdgeInsets.only(
                       top: 30,
                       bottom: 5,
-                      left: widget.width >= 1000
-                          ? widget.width * 0.30
-                          : widget.width * 0.08,
+                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
                     child: Row(
                       children: [
@@ -278,7 +255,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                           ),
                         ),
                         Text(
-                          ' (${widget.thread.comments.length})',
+                          ' (${thread.comments.length})',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -295,19 +272,13 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
                     margin: EdgeInsets.only(
                       top: 5,
                       bottom: 5,
-                      left: widget.width >= 1000
-                          ? widget.width * 0.30
-                          : widget.width * 0.08,
+                      left: width >= 1000 ? width * 0.30 : width * 0.08,
                     ),
-                    width: widget.width >= 1000
-                        ? widget.width * 0.35
-                        : widget.width * 0.80,
-                    height: widget.height >= 600
-                        ? widget.height * 0.3
-                        : widget.height * 0.30,
+                    width: width >= 1000 ? width * 0.35 : width * 0.80,
+                    height: height >= 600 ? height * 0.3 : height * 0.30,
                     child: CommentList(
-                      comment: widget.thread.comments,
-                      threadId: widget.thread.id,
+                      comment: thread.comments,
+                      threadId: thread.id,
                     ),
                   ),
                 ],
@@ -320,7 +291,7 @@ class DetailThreadScreenState extends State<DetailThreadScreen> {
   }
 }
 
-class CommentList extends StatefulWidget {
+class CommentList extends StatelessWidget {
   final List<Comment> comment;
   final String threadId;
 
@@ -331,43 +302,38 @@ class CommentList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  CommentListState createState() => CommentListState();
-}
-
-class CommentListState extends State<CommentList> {
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.comment.length,
+      itemCount: comment.length,
       itemBuilder: (context, index) {
         return CommentCard(
-          id: widget.comment[index].id,
-          body: widget.comment[index].body,
-          createdAt: widget.comment[index].createdAt,
-          owner: widget.comment[index].owner,
-          upVotesBy: widget.comment[index].upVotesBy,
-          downVotesBy: widget.comment[index].downVotesBy,
+          id: comment[index].id,
+          body: comment[index].body,
+          createdAt: comment[index].createdAt,
+          owner: comment[index].owner,
+          upVotesBy: comment[index].upVotesBy,
+          downVotesBy: comment[index].downVotesBy,
           isCommentLiked: context
               .read<ContextModel>()
-              .isCommentLiked(widget.threadId, widget.comment[index].id),
+              .isCommentLiked(threadId, comment[index].id),
           isCommentDisliked: context.read<ContextModel>().isCommentDisliked(
-                widget.threadId,
-                widget.comment[index].id,
+                threadId,
+                comment[index].id,
               ),
           onLike: () {
             final threadAction = context.read<ContextModel>();
 
             threadAction.likeComment(
-              widget.threadId,
-              widget.comment[index].id,
+              threadId,
+              comment[index].id,
             );
           },
           onDislike: () {
             final threadAction = context.read<ContextModel>();
 
             threadAction.disLikeComment(
-              widget.threadId,
-              widget.comment[index].id,
+              threadId,
+              comment[index].id,
             );
           },
         );
