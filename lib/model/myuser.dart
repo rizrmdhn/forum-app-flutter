@@ -6,4 +6,4 @@ class AuthUserModel extends ChangeNotifier {
   User get authUser => _authUser;
 }
 
-var myUser = User(id: 'user-10', name: 'AzE', email: "aze@mail.com");
+var myUser = User(id: 'user-10', name: 'Rizki', email: "aze@mail.com");

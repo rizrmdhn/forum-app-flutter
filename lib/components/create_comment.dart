@@ -39,6 +39,7 @@ class CreateCommentState extends State<CreateComment> {
                     widget.threadId,
                     commentController.text,
                   );
+              commentController.clear();
             },
             style: TextButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 34, 40, 49),

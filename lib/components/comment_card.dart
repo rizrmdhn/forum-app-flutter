@@ -37,34 +37,41 @@ class CommentCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        'https://ui-avatars.com/api/?name=${owner.name}&length=1&background=random&size=128',
-                        width: 28,
+              Expanded(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          'https://ui-avatars.com/api/?name=${owner.name}&length=1&background=random&size=128',
+                          width: 28,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    owner.name,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
+                    Text(
+                      owner.name,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                DateFormatter.format(
-                  DateTime.parse(createdAt),
+                  ],
                 ),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal,
+              ),
+              Expanded(
+                flex: 1,
+                child: Text(
+                  DateFormatter.format(
+                    DateTime.parse(createdAt),
+                  ),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               )
             ],
